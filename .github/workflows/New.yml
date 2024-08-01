@@ -6,17 +6,12 @@ on:
             - master
 jobs:
     build:
-        # Purpose of this job is to Apply Remote Changes for the branch triggering
-        # the pipeline build to the Dev instance, then publish the application to
-        # app repo using the template versioning format.
         name: Publish from Dev
         runs-on: ubuntu-latest
-        # Below line can be used to set conditionals for modifying your pipeline as needed.
         # if: ${{ github.event_name == 'pull_request'}}
-            
         steps:
             - name: ServiceNow CI/CD Apply Changes
-              #uses: ServiceNow/servicenow-devops-change@v4.0.0
+              uses: ServiceNow/servicenow-devops-change@v4.0.0
               env:
                     snowUsername: ${{ secrets.SN_DEVOPS_USER }}
                     snowPassword: ${{ secrets.SN_DEVOPS_PASSWORD }}
@@ -34,13 +29,9 @@ jobs:
                     snowPassword: ${{ secrets.SN_DEVOPS_PASSWORD }}
                     snowSourceInstance: ${{ secrets.SN_INSTANCE_URL }}
                     appSysID: ${{ secrets.SN_APP_SYSID }}
-                
-        # This is required to pass the version number output from Publish App 
-        # to the input for Install App in the next job! This is because the jobs 
-        # run on different Linux instances, so without this Install App won't know
-        # what to install.
         outputs:
             publishversion: ${{ steps.version.outputs.publishversion }}
+            
     deploy:
       name: Deploy
       #needs: <upstream job>
