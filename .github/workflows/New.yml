@@ -1,9 +1,11 @@
 name: ServiceNow GitHub Actions Demo
+
 on:
-    pull_request:
-    push:
-        branches:
-            - master
+    #pull_request:
+    #push:
+     #   branches:
+      #      - master
+  workflow_dispatch:
 jobs:
     build:
         name: Publish from Dev
