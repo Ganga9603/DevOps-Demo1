@@ -7,7 +7,7 @@ on:
 jobs:
     build:
         name: Publish from Dev
-        runs-on: ubuntu-latest
+        runs-on: windows-latest
         # if: ${{ github.event_name == 'pull_request'}}
         steps:
             - name: ServiceNow CI/CD Apply Changes
@@ -34,8 +34,8 @@ jobs:
             
     deploy:
       name: Deploy
-      #needs: <upstream job>
-      runs-on: ubuntu-latest
+      #needs: -master
+      runs-on: windows-latest
       steps:     
         - name: ServiceNow Change
           uses: ServiceNow/servicenow-devops-change@v4.0.0
